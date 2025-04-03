@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 
 // Importing routers
 // Importing routers
-const AuthRouter = require('./routes/AuthRouter');
-const ProductRouter = require('./routes/ProductRouter');
+const AuthRouter = require('./Routes/AuthRouter');
+const ProductRouter = require('./Routes/ProductRouter');
 const AccountRouter = require('./Routes/AccountRouter');
 const InfoRouter = require('./Routes/InfoRouter')
 
