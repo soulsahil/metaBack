@@ -15,12 +15,10 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // MongoDB connection
-mongoose.connect(process.env.MONGO_CONN, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  tls: true,
-  tlsInsecure: true
-});
+mongoose.connect(process.env.MONGO_CONN)
+  .then(() => console.log('✅ Connected to MongoDB'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
+
 
 // Middleware
 app.use(cors({
