@@ -12,7 +12,7 @@ const AccountRouter = require('./Routes/AccountRouter');
 const InfoRouter = require('./Routes/InfoRouter')
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_CONN)
