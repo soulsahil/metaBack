@@ -25,7 +25,7 @@ const InfoSchema = new Schema({
         required: true
     },
     meta_access_token: {
-        tpe: String,
+        type: String,
         required: true
     }
 });
