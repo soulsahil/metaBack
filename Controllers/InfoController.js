@@ -23,7 +23,8 @@ exports.createInfo = async (req, res) => {
         companyName,
         industryName,
         companyWebsite,
-        companyType
+        companyType,
+        meta_access_token
       });
       console.log('crossed this');
       // Save the info to the database
