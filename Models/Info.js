@@ -23,6 +23,10 @@ const InfoSchema = new Schema({
         type: String,
         enum: ["Brand"],
         required: true
+    },
+    meta_access_token: {
+        tpe: String,
+        required: true
     }
 });
 
@@ -30,10 +34,3 @@ InfoSchema.plugin(mongooseSequence, { inc_field: 'businessId' });
 
 const InfoModel = mongoose.model('businesses', InfoSchema);
 module.exports = InfoModel;
-
-
-
-
-
-
-
