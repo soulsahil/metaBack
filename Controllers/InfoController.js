@@ -9,7 +9,7 @@ const Logins = require("../Models/User");
 exports.createInfo = async (req, res) => {
   console.log("Received request for createInfo");
     try {
-      const { companyName, industryName, companyWebsite, companyType, meta_access_token } = req.body;
+      const { companyName, industryName, companyWebsite, companyType } = req.body;
       
       const latestLogin = await Logins.findOne().sort({ createdAt: -1 });
     if (!latestLogin) {
@@ -19,16 +19,20 @@ exports.createInfo = async (req, res) => {
     console.log("Latest loginId:", latestLoginId);
 
       // Create a new info instance
-      const newInfo = new InfoModel({
-        companyName,
-        industryName,
-        companyWebsite,
-        companyType,
-        meta_access_token
-      });
-      console.log('crossed this');
-      // Save the info to the database
-      const savedInfo = await newInfo.save();
+      let savedInfo = await InfoModel.findOne({ companyName, companyWebsite });
+
+      if (savedInfo) {
+        console.log("Info already exists. Using existing entry.");
+      } else {
+        const newInfo = new InfoModel({
+          companyName,
+          industryName,
+          companyWebsite,
+          companyType
+        });
+        savedInfo = await newInfo.save();
+        console.log("New info saved.");
+      }
 
       const updatedBusinessUser = await BusinessUserModel.findOneAndUpdate(
         { loginId: latestLoginId },
@@ -52,7 +56,7 @@ exports.createInfo = async (req, res) => {
     }
   };
 
-// Add meta access token to an existing info entry
+  // Add meta access token to an existing info entry
   exports.addMetaAccessTokenByObjectId = async (req, res) => {
     try {
       const { meta_access_token } = req.body;
@@ -80,7 +84,9 @@ exports.createInfo = async (req, res) => {
       });
     }
   };
-
+  
+  
+  
   // Get all info entries
   exports.getAllInfo = async (req, res) => {
     try {
