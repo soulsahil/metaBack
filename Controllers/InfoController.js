@@ -9,7 +9,7 @@ const Logins = require("../Models/User");
 exports.createInfo = async (req, res) => {
   console.log("Received request for createInfo");
     try {
-      const { companyName, industryName, companyWebsite, companyType } = req.body;
+      const { companyName, industryName, companyWebsite, companyType, meta_access_token } = req.body;
       
       const latestLogin = await Logins.findOne().sort({ createdAt: -1 });
     if (!latestLogin) {
