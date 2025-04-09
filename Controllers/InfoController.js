@@ -51,7 +51,36 @@ exports.createInfo = async (req, res) => {
       });
     }
   };
+
+// Add meta access token to an existing info entry
+  exports.addMetaAccessTokenByObjectId = async (req, res) => {
+    try {
+      const { meta_access_token } = req.body;
+      const { id } = req.params;
   
+      const updatedInfo = await InfoModel.findByIdAndUpdate(
+        id,
+        { meta_access_token },
+        { new: true }
+      );
+  
+      if (!updatedInfo) {
+        return res.status(404).json({ success: false, message: 'Business not found' });
+      }
+  
+      res.status(200).json({
+        success: true,
+        message: 'Access token updated successfully',
+        data: updatedInfo
+      });
+    } catch (error) {
+      res.status(400).json({
+        success: false,
+        message: error.message
+      });
+    }
+  };
+
   // Get all info entries
   exports.getAllInfo = async (req, res) => {
     try {
