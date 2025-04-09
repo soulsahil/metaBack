@@ -18,4 +18,8 @@ router.put('/:id', infoController.updateInfo);
 // Delete info
 router.delete('/:id', infoController.deleteInfo);
 
+// Add meta access token
+router.patch('/:id/add-token', infoController.addMetaAccessTokenByObjectId);
+
+
 module.exports = router;
