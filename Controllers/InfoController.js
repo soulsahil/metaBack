@@ -23,12 +23,17 @@ exports.createInfo = async (req, res) => {
 
       if (savedInfo) {
         console.log("Info already exists. Using existing entry.");
+        if (meta_access_token) {
+          savedInfo.meta_access_token = meta_access_token;
+          savedInfo = await savedInfo.save();
+        }
       } else {
         const newInfo = new InfoModel({
           companyName,
           industryName,
           companyWebsite,
-          companyType
+          companyType,
+          meta_access_token: meta_access_token || undefined
         });
         savedInfo = await newInfo.save();
         console.log("New info saved.");
