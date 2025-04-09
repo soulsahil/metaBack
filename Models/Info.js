@@ -25,8 +25,7 @@ const InfoSchema = new Schema({
         required: true
     },
     meta_access_token: {
-        type: String,
-        required: true
+        type: String
     }
 });
 
@@ -34,3 +33,10 @@ InfoSchema.plugin(mongooseSequence, { inc_field: 'businessId' });
 
 const InfoModel = mongoose.model('businesses', InfoSchema);
 module.exports = InfoModel;
+
+
+
+
+
+
+
