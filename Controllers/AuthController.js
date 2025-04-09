@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const UserModel = require("../Models/User");
 const BusinessUserModel = require("../Models/BusinessUser");
+const InfoModel = require("../Models/Info");
+
 
 const signup = async (req, res) => {
     try {
@@ -32,6 +34,10 @@ const signup = async (req, res) => {
         });
         await newBusinessUser.save();
 
+        const savedBusinessUser = await BusinessUserModel.findOne({ loginId: newUser._id });
+        const businessId = savedBusinessUser?.businessId || null;
+        
+
             const jwtToken = jwt.sign(
                 { _id: newUser._id, email: newUser.email, name: newUser.fullname },
                 process.env.JWT_SECRET,
@@ -45,7 +51,8 @@ const signup = async (req, res) => {
                 user: {
                     _id: newUser._id,
                     name: newUser.fullname,
-                    email: newUser.email
+                    email: newUser.email,
+                    businessId
                 }
             });
 
@@ -79,6 +86,16 @@ const login = async (req, res) => {
             });
         }
 
+        let businessId = null;
+        const businessUser = await BusinessUserModel.findOne({ loginId: user._id });
+        if (businessUser && businessUser.businessId) {
+            const info = await InfoModel.findById(businessUser.businessId);
+            if (info) {
+                businessId = info._id;
+            }
+        }
+
+
         const jwtToken = jwt.sign(
             { _id: user._id, email: user.email, name: user.fullname },
             process.env.JWT_SECRET,
@@ -92,7 +109,8 @@ const login = async (req, res) => {
             user: {
                 _id: user._id,
                 name: user.fullname,
-                email: user.email
+                email: user.email,
+                businessId
             }
         });
     } catch (err) {
