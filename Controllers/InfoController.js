@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const InfoModel = require("../Models/Info");
 const BusinessUserModel = require("../Models/BusinessUser");
 const Logins = require("../Models/User");
+const PostingAdSpend = require("../Models/PostingAdSpend");
 
 
 // Create a new info entry
@@ -181,6 +182,24 @@ exports.createInfo = async (req, res) => {
       res.status(500).json({
         success: false,
         message: error.message
+      });
+    }
+  };
+
+exports.getAdSpendByBusinessId = async (req, res) => {
+    try {
+      const { businessId } = req.params;
+      const adSpends = await PostingAdSpend.find({ businessId });
+  
+      res.status(200).json({
+        success: true,
+        count: adSpends.length,
+        data: adSpends,
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
       });
     }
   };
