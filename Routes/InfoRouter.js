@@ -12,6 +12,8 @@ router.get('/', infoController.getAllInfo);
 // Get info by ID
 router.get('/:id', infoController.getInfoById);
 
+router.get('/business/:businessId', infoController.getAdSpendByBusinessId);
+
 // Update info
 router.put('/:id', infoController.updateInfo);
 
@@ -20,6 +22,7 @@ router.delete('/:id', infoController.deleteInfo);
 
 // Add meta access token
 router.patch('/:id/add-token', infoController.addMetaAccessTokenByObjectId);
+
 
 
 module.exports = router;
