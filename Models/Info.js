@@ -21,8 +21,7 @@ const InfoSchema = new Schema({
     },
     companyType: {
         type: String,
-        enum: ["Brand"],
-        required: true
+        default: "Brand"
     },
     meta_access_token: {
         type: String
